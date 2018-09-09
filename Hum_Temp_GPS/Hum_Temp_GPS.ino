@@ -2,7 +2,10 @@
 #include "DHT.h"
 #include <stdio.h>
 #include <SoftwareSerial.h>
+#include <Wire.h>
+#include <adxl345_blockly.h>
 SoftwareSerial SoftSerial(2, 3);
+ADXL345Block adxl345;
 #define DHTPIN A0            //接溫溼度模組資料的腳位
 #define DHTTYPE DHT11       //溫溼度模組的類型
 DHT dht(DHTPIN, DHTTYPE);
@@ -13,19 +16,12 @@ String GGAUTCtime, GGAlatitude, GGAlongitude;
 String GPStatus, SatelliteNum, HDOPfactor, Height;
 String PositionValid, RMCUTCtime, RMClatitude;
 String RMClongitude, Speed, Direction, Date, Declination, Mode;
-const int Xpin = A1;                  // x-axis
-const int Ypin = A2;                  // y-axis
-const int Zpin = A3;                  // z-axis
-
-const String XHEADER = "X: ";
-const String YHEADER = "Y: ";
-const String ZHEADER = "Z: ";
-const String TAB = "\t";
 float hum;
 float temp;
-
 char ssid[] = "JOJO"; //WiFi連線的名稱
 char pass[] = "033176949"; //WiFi連線的密碼
+String id = "a71287300"; //使用者帳號
+float Null = 0;
 int status = WL_IDLE_STATUS;
 
 WiFiClient client;
@@ -38,6 +34,7 @@ const unsigned long postingInterval = 1L * 1000L; //傳輸的週期時間
 
 void setup() {
   Serial.begin(9600);
+  adxl345.begin();
   dht.begin();
   SoftSerial.begin(9600);
   for (; !Serial;);
@@ -99,7 +96,7 @@ void loop() {
     }
   }
 
-  delay(200);
+  delay(5);
 }
 
 
@@ -111,15 +108,18 @@ void httpRequest() {
     char tmp[100];
     hum = dht.readHumidity();
     temp = dht.readTemperature();
-    int xpin = analogRead(Xpin);
-    int ypin = analogRead(Ypin);
-    int zpin = analogRead(Zpin);
+    float xpin = adxl345.getX();
+    float ypin = adxl345.getY();
+    float zpin = adxl345.getZ();
+    float DATA = sqrt(xpin * xpin + ypin * ypin + zpin * zpin);
+    int Roll = adxl345.getRoll(); //寵物傾角
+    int Pitch = adxl345.getPitch(); //側傾角
     if (PositionValid == "A")
     {
-      sprintf(tmp, "GET /?hum=%f&temp=%f&xpin=%d&ypin=%d&zpin=%d 緯度=%S 經度=%S  HTTP/1.1", hum, temp, xpin, ypin, zpin, RMClatitude.c_str(), RMClongitude.c_str());
+      sprintf(tmp, "GET /?id=%s&temp=%f&hum=%f&G=%f&Roll=%d&Pitch=%d&latitude=%f&longtitude=%f HTTP/1.1", id.c_str(), temp, hum, DATA, Roll, Pitch, RMClatitude.toFloat(), RMClongitude.toFloat());
     }
     else
-      sprintf(tmp, "GET /?hum=%f&temp=%f&xpin=%d&ypin=%d&zpin=%d HTTP/1.1", hum, temp, xpin, ypin, zpin);
+      sprintf(tmp, "GET /?id=%s&temp=%f&hum=%f&G=%f&Roll=%d&Pitch=%d&latitude=%f&longtitude=%f HTTP/1.1", id.c_str(), temp, hum, DATA, Roll, Pitch, Null, Null);
     client.println(tmp);
     client.println("User-Agent: LinkIt7697_WiFi/1.1");
     client.println("Connection: close");
@@ -185,4 +185,3 @@ void output() // 輸出相關訊息的程式都包裝在這裡
   Serial.print("Direction:");
   Serial.println(Direction);
 }
-
