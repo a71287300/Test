@@ -38,7 +38,7 @@ void setup() {
   dht.begin();
   SoftSerial.begin(9600);
   for (; !Serial;);
-
+  pinMode(LED_BUILTIN, OUTPUT);
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
@@ -56,7 +56,17 @@ void loop() {
   if (millis() - lastConnectionTime > postingInterval) {
     httpRequest();
   }
-
+  Serial.println(analogRead(A2));
+  delay(100);
+  if (analogRead(A2) < 1300) {
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(300);                       // wait for 0.3 second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+    delay(300);                       // wait for 0.3 second
+  } else {
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+  }
   while (SoftSerial.available())
   {
     if (Start_Flag) {
