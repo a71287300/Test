@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-ch"> */語系
+<html lang="zh-ch"> <!--/*語系*/-->
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> */可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- /*可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎*/ -->
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -57,10 +57,8 @@
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
 			  <ul class="nav navbar-nav">
 				<li class="active"><a href="index.php">首頁</a></li>
-				<li><a href="#service">功能</a></li>
-				<li><a href="#doctor">開發人員</a></li>
-				<li><a href="#facilities">產品</a></li>
-				
+				<li><a href="#boxes">功能</a></li>
+				<li><a href="Logout.php">登出</a></li>
 			  </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -71,7 +69,7 @@
 
 	<!-- Section: intro -->
     <section id="intro" class="intro">
-		<div class="intro-content">
+		<div class="intro-content"> 
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6">
@@ -79,7 +77,7 @@
 					<h2 class="h-ultra">智慧項圈官網</h2>
 					</div>
 					<div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
-					<h4 class="h-light">很榮幸<span class="color">能夠為您</span>服務</h4>
+					<h4 class="h-light">提供 <span class="color">最棒的服務</span>給您</h4>
 					</div>
 						<div class="well well-trans">
 						<div class="wow fadeInRight" data-wow-delay="0.1s">
@@ -95,72 +93,24 @@
 
 
 					</div>
-				
-		
-	               <form action="member_info.php" method="post">
-					<div class="col-lg-6">
-						<div class="form-wrapper">
-						<div class="wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.2s">
+				<div>			
+		       <font size="5">
+		       <b><table width="580" height="350">
+		       <tr><td align="center" valign="center">	
+					<p>帳號或密碼錯誤，請查明後再登入</p>	
+					</tr></td>
+					</b></table>
+					</font>
+					</div>
+								</div>
+							</div>				
 						
-							<div class="panel panel-skin">
-							<div class="panel-heading">
-									<h3 class="panel-title"><span class="fa fa-pencil-square-o"></span> 會員資料</h3>
-									</div>
-									<div class="panel-body">
-									
-									<form role="form" class="lead">
-										<div class="row">
-											<div class="col-xs-12 col-sm-12 col-md-12">
-												<div class="form-group">
-													<label>飼主</label>
-													<input type="text" name="ID" id="ID" class="form-control input-md">
-												</div>
-											</div>
-											
-										</div>
-
-										<div class="row">
-											<div class="col-xs-12 col-sm-12 col-md-12">
-												<div class="form-group">
-													<label>寵物</label>
-													<input type="text" name="petname" id="petname" class="form-control input-md">
-												</div>
-											</div>
-											
-										</div>
-										
-										<div class="row">
-											<div class="col-xs-12 col-sm-12 col-md-12">
-												<div class="form-group">
-													<label>犬種</label>
-													<input type="text" name="species" id="species" class="form-control input-md">
-												</div>
-											</div>
-											
-										</div>
-										
-										<div class="row">
-											<div class="col-xs-12 col-sm-12 col-md-12">
-												<div class="form-group">
-													<label>電話</label>
-													<input type="text" name="cellphone" id="cellphone" class="form-control input-md">
-												</div>
-											</div>
-											
-										</div>
-										<input type="submit" value="確定" class="btn btn-skin btn-block btn-lg">
-										
-									
-									</form>
-									</form>
-		
-							
-						
+						</div>
+						</div>
 					</div>					
 				</div>		
 			</div>
-			</div>
-
+		</div>		
     </section>
 	
 	<!-- /Section: intro -->
@@ -176,7 +126,7 @@
 						<div class="box text-center">
 							
 							<i class="fa fa-check fa-3x circled bg-skin"></i>
-							 <h4 class="h-bold">紀錄寶貝狀態</h4>
+							<h4 class="h-bold">長期紀錄</h4>
 							<p>
 							讓飼主放心出門，輕鬆瞭解寵物需要
 							</p>
@@ -184,18 +134,20 @@
 					</div>
 				</div>
 				</form>
+			
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
 							
 							<i class="fa fa-list-alt fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">圖表顯示</h4>
+							<h4 class="h-bold">QR_Code</h4>
 							<p>
-							有長期的紀錄比較更能了解寵物身體狀況
+							寵物走失時方便找尋主人
 							</p>
 						</div>
 					</div>
 				</div>
+			
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
@@ -212,7 +164,7 @@
 						<div class="box text-center">
 							
 							<i class="fa fa-check fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">追蹤系統</h4>
+							<h4 class="h-bold">追蹤功能</h4>
 							<p>
 							防止寵物走失，設有連線功能
 							</p>
@@ -223,6 +175,4 @@
 		</div>
 
 	</section>
-
-</body>
-</html>
+	<!-- /Section: boxes -->

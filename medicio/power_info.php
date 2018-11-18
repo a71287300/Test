@@ -3,11 +3,11 @@
 	session_start();
 ?>
 <!DOCTYPE html>
-<html lang="zh-ch"> */語系
+<html lang="zh-ch"> <!--/*語系*/-->
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> */可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- /*可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎*/ -->
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -25,16 +25,14 @@
     <link href="css/style.css" rel="stylesheet">
 
 	<!-- boxed bg -->
-	<link id="bodybg" href="bodybg/bg1.css" rel="stylesheet" type="text/css" />
+	<link id="bodybg" href="bodybg/bg10.css" rel="stylesheet" type="text/css" />
 	<!-- template skin -->
 	<link id="t-colors" href="color/default.css" rel="stylesheet">
 
 
 </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
-
-<div id="wrapper">
+<body>
 	
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 		<div class="top-area">
@@ -48,7 +46,7 @@
 				</div>
 			</div>
 		</div>
-        <div class="container navigation">
+     <div class="container navigation">
 		
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
@@ -57,24 +55,22 @@
                 
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
 			  <ul class="nav navbar-nav">
-				<li class="active"><a href="login1.php">首頁</a></li>
-				<li><a href="#service">功能</a></li>
-				<li><a href="#doctor">開發人員</a></li>
-				<li><a href="#facilities">產品</a></li>
+				<li class="active"><a href="index.php">首頁</a></li>
+				<li><a href="#boxes">功能</a></li>
 				<li><a href="power.php">最新紀錄</a></li>
 				<li><a href="Logout.php">登出</a></li>
 			  </ul>
             </div>
-            <!-- /.navbar-collapse -->
-        </div>
+        
         <!-- /.container -->
     </nav>
 	
 
 	<!-- Section: intro -->
+
     <section id="intro" class="intro">
 		<div class="intro-content">
 			<div class="container">
@@ -101,27 +97,63 @@
 
 					</div>
 					<b>
-        <?php
+	    <?php
 		require_once("dbtools.inc.php");
-                        
-		//建立資料連接
+		
+		if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE):
+
 		$account = $_SESSION['account'];
 		$link = create_connection();
-		$sql = "SELECT * FROM dog WHERE account ='$account' ORDER BY date DESC,time DESC";
-		$result = execute_sql($link, "membership", $sql);
-	
-		while ($row = $result->fetch_row())
+		$sql = "SELECT * FROM power WHERE account ='$account' ORDER BY date DESC,time DESC";
+		mysqli_select_db($link, "membership");
+		$result = mysqli_query($link,$sql);
+		
+		$data_nums = mysqli_num_rows($result);
+		$per = 4;
+		$pages = ceil($data_nums/$per);
+		if (!isset($_GET["page"]))  //假如$_GET["page"]未設置
+			$page = 1; //則在此設定起始頁數
+		else 
 		{
-			for ($i = 1; $i < $result->field_count; $i=$i+6)
-			{
-				echo  $row[$i]. "</br>" ;
-				if($row[$i]<=30 && $row[$i]>=15)
-					echo "室溫正常". "</br>";
-				else
-					echo "室溫異常". "</br>";
-			}
-
+			$page = intval($_GET["page"]); //確認頁數只能夠是數值資料
+			$page = ($page > 0) ? $page : 1; //確認頁數大於零 
+			$page = ($pages > $page) ? $page : $pages; //確認使用者沒有輸入太神奇的數字 
 		}
+		$start = ($page-1)*$per; //每一頁開始的資料序號
+		$result2 = mysqli_query($link,"SELECT * FROM power WHERE account ='$account' ORDER BY date DESC,time DESC LIMIT " .$start. ', '.$per) or die("Error");
+		
+		while($row = mysqli_fetch_array($result2))
+		{ 
+			for ($i = 1; $i < $result->field_count; $i=$i+5)
+			{
+				echo  "<font color=\"black\">室溫為攝氏$row[$i]度,</font> ";
+				if($row[$i]<30)
+					if($row[$i]>=20)
+					echo '<font color="black">其溫度正常</br></font>';
+				else
+					echo '<font color="RED">其溫度異常</br></font>';
+				else
+					echo '<font color="RED">其溫度異常</br></font>';
+				echo  $row[$i+2]. " " .$row[$i+3]."</br>"."</br>" ;
+			}
+		}	
+		
+		//分頁頁碼
+		echo "<font color=\"black\">共 .$data_nums. 筆-在 .$page. 頁-共 .$pages. 頁</font>";
+		echo "<br/><a href=?page=1>首頁</a> ";
+		echo "第 ";
+		for($i=1;$i<=$pages;$i++)
+		{
+			if ( $page-3 < $i && $i < $page+3 ) 
+			{
+				echo "<a href=?page=".$i.">".$i."</a> ";
+			}
+		} 
+		echo " 頁 <a href=?page=".$pages.">末頁</a><br/><br/>";
+		
+		else:
+			header('location: index.php');
+		endif;
 	?>
                     </b>	
 				</div>		
@@ -150,29 +182,33 @@
 					</div>
 				</div>
 				</form>
+				<form action="QR_Code.php" method="post">
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
 							
 							<i class="fa fa-list-alt fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">圖表顯示</h4>
+							<input type="submit" value="QR_Code" class="btn btn-skin btn-block btn-lg">
 							<p>
-							有長期的紀錄比較更能了解寵物身體狀況
+							寵物走失時方便找尋主人
 							</p>
 						</div>
 					</div>
 				</div>
+				</form>
+				<form action="team.html" method="post">
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
 							<i class="fa fa-user-md fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">製作團隊</h4>
+							<input type="submit" value="製作團隊" class="btn btn-skin btn-block btn-lg">
 							<p>
 							一為各位會員提升網站品質
 							</p>
 						</div>
 					</div>
 				</div>
+				</form>
 				<form action="google map api.php" method="post">
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">

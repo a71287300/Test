@@ -42,15 +42,16 @@ def draw():
                         init_func=init, blit=True)
     plt.show()
 #方向轉頭
+    
 def direction():
     global Roll
     global Pitch
     global Title
     Title = ""
     if Roll<20:
-        Title += "低頭 "
-    elif Roll>60:
         Title += "抬頭 "
+    elif Roll>60:
+        Title += "低頭 "
     if Pitch > 60 or Pitch < -60:
         Title += "轉頭"
     elif Pitch<-20:
@@ -59,7 +60,6 @@ def direction():
         Title += "轉左"
     print(Title)
     time.sleep(1)
-
 #活動檢測
 def  Acceleration():
     global q
@@ -86,12 +86,6 @@ def  Acceleration():
     else:
         print("測量次數",count)
         print("測量達標值",result)
-
-
-
-
-
-
 
 def writeDB(data):
     global runtime
@@ -138,8 +132,6 @@ def writeDB(data):
     #cursor.execute('INSERT INTO linkit(temp,hum,xpin,ypin,zpin,date,time) VALUES ("%f","%f","%d","%d","%d","%s","%s")' % parameters)
     db.commit()
 
-
-
 class ServerHandler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
@@ -153,8 +145,6 @@ class ServerHandler(BaseHTTPRequestHandler):
         writeDB(data)
         data = bytes("OK, data got.", "utf-8") #回傳確認資料
         self.wfile.write(data)
-
-
 
 server_address = ("", 8000) #監聽位置
 httpd = HTTPServer(server_address, ServerHandler)

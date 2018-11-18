@@ -1,0 +1,1 @@
+<img src="img/team/1-4.jpg" alt="" width="100%">

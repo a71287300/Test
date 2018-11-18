@@ -1,13 +1,17 @@
+<?php
+	//啟動session
+	session_start();
+?>
 <!DOCTYPE html>
-<html lang="zh-ch"> */語系
+<html lang="zh-ch"> <!--/*語系*/-->
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> */可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- /*可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎*/ -->
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>會員註冊</title>
+    <title>智慧項圈</title>
 	
     <!-- css -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -56,15 +60,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
 			  <ul class="nav navbar-nav">
-				<li class="active"><a href="index.php">首頁</a></li>
-				<li><a href="#service">功能</a></li>
+				<li class="active"><a href="#intro">首頁</a></li>
+				<li><a href="#boxes">功能</a></li>
 				<li><a href="#doctor">開發人員</a></li>
 				<li><a href="#facilities">產品</a></li>
-				
-			  </ul>
-            </div>
-				  
-				
 			  </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -75,14 +74,16 @@
 
 	<!-- Section: intro -->
     <section id="intro" class="intro">
-		<div class="intro-content">
+		<div class="intro-content"> 
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6">
 					<div class="wow fadeInDown" data-wow-offset="0" data-wow-delay="0.1s">
-					<h2 class="h-ultra">歡迎註冊智慧項圈官網</h2>
+					<h2 class="h-ultra">智慧項圈官網</h2>
 					</div>
-					
+					<div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
+					<h4 class="h-light">提供 <span class="color">最棒的服務</span>給您</h4>
+					</div>
 						<div class="well well-trans">
 						<div class="wow fadeInRight" data-wow-delay="0.1s">
 
@@ -97,14 +98,23 @@
 
 
 					</div>
-					<form action="register.php" method="post">
+					<?php
+						//使用 isset()方法，判別有沒有此變數可以使用，以及為已經登入
+						if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE):
+
+						//使用php header來轉址到資料庫頁面
+						header('location: mysqli_oo.php');
+		
+						else:
+					?>
+					<form action="checkpassword.php" method="post">
 					<div class="col-lg-6">
 						<div class="form-wrapper">
 						<div class="wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.2s">
 						
 							<div class="panel panel-skin">
 							<div class="panel-heading">
-									<h3 class="panel-title"><span class="fa fa-pencil-square-o"></span>加入會員</h3>
+									<h3 class="panel-title"><span class="fa fa-pencil-square-o"></span> 會員登錄</h3>
 									</div>
 									<div class="panel-body">
 									
@@ -129,38 +139,47 @@
 											
 										</div>
 										
-										<input type="submit" value="註冊" class="btn btn-skin btn-block btn-lg">
+										<input type="submit" value="登入" class="btn btn-skin btn-block btn-lg">
 										
-							           </form>
-									</form>
 									
+									</form>
+									</form>
+									<p><a href="register.html">尚未註冊嗎? 立即註冊</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="delete.html">刪除帳號</a></p>
+									<?php endif; ?>	
 								</div>
 							</div>				
 						
 						</div>
 						</div>
-					</div>					
+					</div>		
+									
 				</div>		
 			</div>
 		</div>		
     </section>
 	
-	<section id="boxes" class="home-section paddingtop-80">
+	<!-- /Section: intro -->
+
+	<!-- Section: boxes -->
+    <section id="boxes" class="home-section paddingtop-80">
 	
 		<div class="container">
 			<div class="row">
+			<form action="power_info.php" method="post">
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
 							
 							<i class="fa fa-check fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">紀錄寶貝狀態</h4>
+							<h4 class="h-bold">長期紀錄</h4>
 							<p>
 							讓飼主放心出門，輕鬆瞭解寵物需要
 							</p>
 						</div>
 					</div>
 				</div>
+				</form>
+			
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
@@ -173,6 +192,7 @@
 						</div>
 					</div>
 				</div>
+			
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
@@ -189,7 +209,7 @@
 						<div class="box text-center">
 							
 							<i class="fa fa-check fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">追蹤系統</h4>
+							<h4 class="h-bold">追蹤功能</h4>
 							<p>
 							防止寵物走失，設有連線功能
 							</p>
@@ -200,7 +220,14 @@
 		</div>
 
 	</section>
+	<!-- /Section: boxes -->
 	
+	
+	
+
+	
+	
+
 	<!-- Section: team -->
     <section id="doctor" class="home-section bg-gray paddingbot-60">
 		<div class="container marginbot-50">
@@ -229,7 +256,7 @@
             <div id="grid-container" class="cbp-l-grid-team">
                 <ul>
                     <li class="cbp-item psychiatrist">
-                        <div class="cbp-caption cbp-singlePage">
+                        <a href="doctors/member1.html" class="cbp-caption cbp-singlePage">
                             <div class="cbp-caption-defaultWrap">
                                 <img src="img/team/2-1.jpg" alt="" width="100%">
                             </div>
@@ -240,12 +267,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <a class="cbp-singlePage cbp-l-grid-team-name">陳人愷</a>
+                        </a>
+                        <div class="cbp-singlePage cbp-l-grid-team-name">陳人愷</div>
                         <div class="cbp-l-grid-team-position">組長</div>
                     </li>
                     <li class="cbp-item cardiologist">
-                        <div class="cbp-caption cbp-singlePage">
+                        <a href="doctors/member2.html" class="cbp-caption cbp-singlePage">
                             <div class="cbp-caption-defaultWrap">
                                 <img src="img/team/1-2.jpg" alt="" width="100%">
                             </div>
@@ -256,14 +283,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <a class="cbp-singlePage cbp-l-grid-team-name">陳璽安</a>
+                        </a>
+                        <div class="cbp-singlePage cbp-l-grid-team-name">陳璽安</div>
                         <div class="cbp-l-grid-team-position">組員</div>
                     </li>
                     <li class="cbp-item cardiologist">
-                        <div class="cbp-caption cbp-singlePage">
+                        <a href="doctors/member3.html" class="cbp-caption cbp-singlePage">
                             <div class="cbp-caption-defaultWrap">
-                                <img src="img/team/3-3.jpg" alt="" width="100%">
+                                <img src="img/team/3-3.jpg" alt="" height="100%">
                             </div>
                             <div class="cbp-caption-activeWrap">
                                 <div class="cbp-l-caption-alignCenter">
@@ -272,12 +299,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <a class="cbp-singlePage cbp-l-grid-team-name">余姿蓉</a>
+                        </a>
+                        <div class="cbp-singlePage cbp-l-grid-team-name">余姿蓉</div>
                         <div class="cbp-l-grid-team-position">組員</div>
                     </li>
                     <li class="cbp-item neurologist">
-                        <div class="cbp-caption cbp-singlePage">
+                        <a href="doctors/member4.html" class="cbp-caption cbp-singlePage">
                             <div class="cbp-caption-defaultWrap">
                                 <img src="img/team/1-4.jpg" alt="" width="100%">
                             </div>
@@ -288,8 +315,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <a class="cbp-singlePage cbp-l-grid-team-name">楊捷帆</a>
+                        </a>
+                        <div class="cbp-singlePage cbp-l-grid-team-name">楊捷帆</div>
                         <div class="cbp-l-grid-team-position">組員</div>
                     </li>
 

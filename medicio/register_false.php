@@ -56,10 +56,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
 			  <ul class="nav navbar-nav">
-				<li class="active"><a href="index.html">首頁</a></li>
-				<li><a href="#service">功能</a></li>
-				<li><a href="#doctor">開發人員</a></li>
-				<li><a href="#facilities">產品</a></li>
+				<li class="active"><a href="index.php">首頁</a></li>
+				<li><a href="#boxes">功能</a></li>
 				<li><a href="Logout.php">登出</a></li>
 			  </ul>
             </div>
@@ -99,7 +97,7 @@
 		       <font size="5">
 		       <b><table width="580" height="350">
 		       <tr><td align="center" valign="center">	
-					<p>您所輸入的資料已經註冊過了，請更換飼主名稱</p>	
+					<p>您所輸入的帳號已被使用，請使用其他帳號註冊</p>	
 					</tr></td>
 					</b></table>
 					</font>
@@ -142,9 +140,9 @@
 						<div class="box text-center">
 							
 							<i class="fa fa-list-alt fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">圖表顯示</h4>
+							<h4 class="h-bold">QR_Code</h4>
 							<p>
-							有長期的紀錄比較更能了解寵物身體狀況
+							寵物走失時方便找尋主人
 							</p>
 						</div>
 					</div>

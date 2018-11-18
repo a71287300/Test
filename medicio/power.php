@@ -3,11 +3,11 @@
 	session_start();
 ?>
 <!DOCTYPE html>
-<html lang="zh-ch"> */語系
+<html lang="zh-ch"> <!--/*語系*/-->
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> */可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- /*可以用來提供網頁內容的資訊給瀏覽器或是搜尋引擎*/ -->
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -60,10 +60,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
 			  <ul class="nav navbar-nav">
-				<li class="active"><a href="login1.php">首頁</a></li>
-				<li><a href="#service">功能</a></li>
-				<li><a href="#doctor">開發人員</a></li>
-				<li><a href="#facilities">產品</a></li>
+				<li class="active"><a href="index.php">首頁</a></li>
+				<li><a href="#boxes">功能</a></li>
 				<li><a href="power.php">最新紀錄</a></li>
 				<li><a href="Logout.php">登出</a></li>
 			  </ul>
@@ -102,35 +100,36 @@
 					</div>
 		<font size="5">
 		<b><table width="580" height="350">
-		<tr><td align="center" valign="center">		
-            
-    <?php
-		require_once("dbtools.inc.php");
+		<tr><td align="center" valign="center">			
+		<?php
+			require_once("dbtools.inc.php");
 		
-		if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE):
+			if(isset($_SESSION['is_login']) && $_SESSION['is_login'] == TRUE):
 
-		$account = $_SESSION['account'];
-		$link = create_connection();
-		$sql = "SELECT * FROM dog WHERE account ='$account' ORDER BY date DESC,time DESC LIMIT 1";
-		$result = execute_sql($link, "membership", $sql);
+			$account = $_SESSION['account'];
+			$link = create_connection();
+			$sql = "SELECT * FROM power WHERE account ='$account' ORDER BY date DESC,time DESC LIMIT 1";
+			$result = execute_sql($link, "membership", $sql);
 		
-		while ($row = $result->fetch_row())
-		{
-			for ($i = 1; $i < $result->field_count; $i=$i+5)
+			while ($row = $result->fetch_row())
 			{
-				echo  $row[$i]. "</br>" ;
-				if($row[$i]<=30 && $row[$i]>=20)
-					echo "室溫正常". "</br>";
-				else
-					echo "室溫異常". "</br>";
+				for ($i = 1; $i < $result->field_count; $i=$i+5)
+				{
+					echo  "<font color=\"black\">$row[$i] </font></br>";
+					if($row[$i]<30)
+						if($row[$i]>=20)
+							echo '<font color="black">其溫度正常</br></font>';
+						else
+							echo '<font color="RED">其溫度異常</br></font>';
+					else
+						echo '<font color="RED">其溫度異常</br></font>';
+				}
 			}
-
-		}
 		
-		else:
-			header('location: login1.php');
-		endif;
-	?>
+			else:
+				header('location: index.php');
+			endif;
+		?>
 		</td></tr>
 		</table></b>					
 				</font>			
@@ -161,29 +160,33 @@
 					</div>
 				</div>
 				</form>
+				<form action="QR_Code.php" method="post">
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
 							
 							<i class="fa fa-list-alt fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">圖表顯示</h4>
+							<input type="submit" value="QR_Code" class="btn btn-skin btn-block btn-lg">
 							<p>
-							有長期的紀錄比較更能了解寵物身體狀況
+							寵物走失時方便找尋主人
 							</p>
 						</div>
 					</div>
 				</div>
+				</form>
+				<form action="team.html" method="post">
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">
 						<div class="box text-center">
 							<i class="fa fa-user-md fa-3x circled bg-skin"></i>
-							<h4 class="h-bold">製作團隊</h4>
+							<input type="submit" value="製作團隊" class="btn btn-skin btn-block btn-lg">
 							<p>
 							一為各位會員提升網站品質
 							</p>
 						</div>
 					</div>
 				</div>
+				</form>
 				<form action="google map api.php" method="post">
 				<div class="col-sm-3 col-md-3">
 					<div class="wow fadeInUp" data-wow-delay="0.2s">

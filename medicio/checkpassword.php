@@ -34,7 +34,7 @@
 		//將session加入一個失敗的紀錄
 		$_SESSION['is_login'] = false;
 		
-		echo"帳號或密碼錯誤，請查明後再登入";
+		header("location:password_error.php");
 	}
 	//否則將資料寫入Cookie，然後導向到會員專區網頁
 	else

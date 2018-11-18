@@ -56,7 +56,7 @@ void loop() {
   if (millis() - lastConnectionTime > postingInterval) {
     httpRequest();
   }
-  Serial.println(analogRead(A2));
+
   delay(100);
   if (analogRead(A2) < 1300) {
     digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
