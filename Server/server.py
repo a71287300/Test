@@ -102,7 +102,7 @@ def writeDB(data):
     DogParameters = (str(data["id"][0]), float(data["temp"][0]),float(data["hum"][0]),float(data["G"][0]),date,time)
     print(DogParameters)
 
-    cursor.execute('INSERT INTO dog(account,temp,hum,G,date,time) VALUES ("%s","%f","%f","%f","%s","%s")' % DogParameters)
+    cursor.execute('INSERT INTO power(account,temp,hum,G,date,time) VALUES ("%s","%f","%f","%f","%s","%s")' % DogParameters)
     PositionParameters = (str(data["id"][0]),float(data["latitude"][0]),float(data["longtitude"][0]),date,time)
     NonPositionParameters = (str(data["id"][0]),date,time)
 
